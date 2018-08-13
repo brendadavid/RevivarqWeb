@@ -45,6 +45,7 @@ class LoginForm extends React.Component {
 					error={errors.username}
 					value={username}
 				/>
+				<br/>
 				<TextField 
 					field="password"
 					label="Senha"
@@ -53,6 +54,7 @@ class LoginForm extends React.Component {
 					error={errors.password}
 					type="password"
 				/>
+				<br/>
 				<Button
 					type="submit"
 					disabled={isLoading}
