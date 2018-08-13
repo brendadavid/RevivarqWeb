@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
-import './App.css';
+
+import './app.css';
 
 // Internal
 import Header from 'components/Header'
+import Routing from 'configs/routing'
 
-const showProps = (props) => {
+const stringify = (props) => {
   return <pre>{JSON.stringify(props, null, 2)}</pre>
 }
 
 class App extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-
-    }
-  }
-
   render() {
     return (
       <div className="App">
-        <Header></Header>
-        {showProps(this.props)}
+        <Header/>
+        <Routing/>
+        {stringify(this.props)}
       </div>
     );
   }

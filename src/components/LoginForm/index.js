@@ -23,11 +23,7 @@ class LoginForm extends React.Component {
 
 		const { login } = this.props
 		const { username, password } = this.state
-		login(username, password)
-			.then(
-				(res) => this.context.router.push('/'),
-				(err) => this.setState({errors: err.data.errors, isLoading: false})
-			)
+		// call login service
 	}
 
 	onChange(e) {
