@@ -1,0 +1,1 @@
+Opcionalmente mova todos os arquivos de estilo para cá, podendo usar o absolute path 'styles/nome_da_coisa.css' para importa-los em cada componente
