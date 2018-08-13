@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 // Internal
-import Header from '../components/Header'
+import Header from 'components/Header'
 
 const showProps = (props) => {
   return <pre>{JSON.stringify(props, null, 2)}</pre>
@@ -21,9 +21,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <p className="App-intro">
-          Logue-se para continuar...
-        </p>
         {showProps(this.props)}
       </div>
     );
