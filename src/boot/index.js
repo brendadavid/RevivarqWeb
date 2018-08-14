@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// import {show_stringify} from 'helpers/json'
+import { withRouter  } from 'react-router-dom'
 
 import './app.css';
 
@@ -13,9 +15,10 @@ class App extends Component {
       <div className="App">
         <Header/>
         <Routing/>
+        {/* {show_stringify(this.props)} */} 
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

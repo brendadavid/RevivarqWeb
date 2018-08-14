@@ -7,7 +7,7 @@ class Header extends React.Component {
 		return (
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
-				<h1 className="App-title">Bem Vindo ao Modelo de Arquitetura em React</h1>
+				<h1 className="App-title">Modelo de Arquitetura da AGES em React!</h1>
 			</header>
 		)
 	}

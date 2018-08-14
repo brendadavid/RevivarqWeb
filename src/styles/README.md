@@ -1,1 +1,1 @@
-Opcionalmente mova todos os arquivos de estilo para cá, podendo usar o absolute path 'styles/nome_da_coisa.css' para importa-los em cada componente
+Para fins de organização. Uma opção é manter todos os estilos nesta pasta ao invés de junto dos seus containers/componentes.
