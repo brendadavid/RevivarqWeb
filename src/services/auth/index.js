@@ -1,10 +1,12 @@
 import axios from 'axios'
+import * as crypto from 'crypto-js'
 
-export const login = (username, password, callback) => {
+export const login = (user_name, password, callback) => {
     const params = {
-        username: username,
-        password: password,
+        user_name: user_name,
+        password: crypto.SHA256(password),
     }
+    console.log(params.password.toString())
 
     axios({
         method: 'post',
@@ -13,7 +15,6 @@ export const login = (username, password, callback) => {
     })
     .then( response => {
         const api_response = response.data
-        console.log(api_response)
         if(api_response.data) {
             if(api_response.data.token) {
                 localStorage.setItem('token', api_response.data.token)
@@ -21,7 +22,7 @@ export const login = (username, password, callback) => {
                 return true
             }
         }
-        callback({ data: 'Error'}, null)
+        callback(api_response, null)
         return false
     })
     .catch( error => {

@@ -19,10 +19,13 @@ class LoginForm extends React.Component {
 	onSubmit(e) {
 		e.preventDefault()
 		this.setState({
-			isLoading: true
+			isLoading: true,
 		})
 		const { username, password } = this.state
 		login(username, password, (error, data) => {
+			this.setState({
+				isLoading: false,
+			})
 			if(error) {
 				console.error(error)
 				return false;
