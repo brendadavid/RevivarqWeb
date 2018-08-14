@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import { login } from 'services/auth'
 
 class LoginForm extends React.Component {
 	constructor(props) {
@@ -13,17 +14,23 @@ class LoginForm extends React.Component {
 		}
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
-	}	
+	}
 
 	onSubmit(e) {
 		e.preventDefault()
 		this.setState({
 			isLoading: true
 		})
-
-		const { login } = this.props
 		const { username, password } = this.state
-		// call login service
+		login(username, password, (error, data) => {
+			if(error) {
+				console.error(error)
+				return false;
+			} else {
+				console.log(data)
+				return false;
+			}
+		})
 	}
 
 	onChange(e) {
@@ -39,7 +46,7 @@ class LoginForm extends React.Component {
 			<form onSubmit={this.onSubmit}>
 				<h1>Login</h1>
 				<TextField 
-					field="username"
+					name="username"
 					label="Usuário"
 					onChange={this.onChange}
 					error={errors.username}
@@ -47,7 +54,7 @@ class LoginForm extends React.Component {
 				/>
 				<br/>
 				<TextField 
-					field="password"
+					name="password"
 					label="Senha"
 					onChange={this.onChange}
 					value={password}
@@ -58,7 +65,7 @@ class LoginForm extends React.Component {
 				<Button
 					type="submit"
 					disabled={isLoading}
-				/>
+				>Autenticar-se</Button>
 			</form>
 		)
 	}

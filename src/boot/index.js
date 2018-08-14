@@ -6,10 +6,6 @@ import './app.css';
 import Header from 'components/Header'
 import Routing from 'configs/routing'
 
-const stringify = (props) => {
-  return <pre>{JSON.stringify(props, null, 2)}</pre>
-}
-
 class App extends Component {
 
   render() {
@@ -17,7 +13,6 @@ class App extends Component {
       <div className="App">
         <Header/>
         <Routing/>
-        {stringify(this.props)}
       </div>
     );
   }
