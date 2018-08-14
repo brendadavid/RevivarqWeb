@@ -1,10 +1,18 @@
 import React from 'react'
+import './styles.css'
+
 import { validToken } from 'services/auth/'
 
 class ProtectedPage extends React.Component {
+
+    redirect = (path) => {
+		const {history} = this.props
+		history.push(path)
+	}
+
     authenticated = () => {
         return (
-            <div>
+            <div className="container">
                 <p>Acesso liberado chefia!</p>
             </div>
         )
@@ -12,8 +20,8 @@ class ProtectedPage extends React.Component {
 
     unauthenticated = () => {
         return (
-            <div>
-                <p>Rota Protegida. Afaste-se!</p>
+            <div className="container">
+                <p>Rota Protegida. <a onClick={() => this.redirect('/')} className="clickable">Afaste-se</a>!</p>
             </div>
         )
     }
@@ -42,4 +50,4 @@ class ProtectedPage extends React.Component {
     }
 }
 
-export default ProtectedPage 
+export default ProtectedPage    

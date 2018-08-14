@@ -12,8 +12,8 @@ import Button from '@material-ui/core/Button'
 import ProtectedPage from '../ProtectedPage';
 
 
-class HomePage extends ProtectedPage {
-
+class HomePage extends ProtectedPage { // Uma das varias maneiras de proteger uma rota é criar uma Rota protegida e usa-la com herança. Ver ProtectedPage para entender a lógica
+	
 	logout = () => {
 		logout((error, success) => {
 			if(error) {
@@ -27,15 +27,11 @@ class HomePage extends ProtectedPage {
 		})
 	}
 
-	redirect = () => {
-		const {history} = this.props
-		history.push('/login')
-	}
-
 	authenticated = () => {
 		return (
 			<div className="container">
 				<p>Bem vindo!</p>
+				<p>Agora você pode acessar a rota <a onClick={() => this.redirect('/protected')} className="clickable">Protegida</a>!</p>
 				<Button
 					className="logoutBtn"
 					onClick={this.logout}
@@ -47,7 +43,8 @@ class HomePage extends ProtectedPage {
 	unauthenticated = () => {
 		return (
 			<div className="container">
-				<p><a onClick={this.redirect} className="clickable">Logue-se</a> para acessar a Home Page!</p>
+				<p><a onClick={() => this.redirect('/login')} className="clickable">Logue-se</a> para acessar a Home Page!</p>
+				<p>Quer tentar ser burlar a nossa segurança? Tenta entrar nessa rota <a onClick={() => this.redirect('/protected')} className="clickable">Protegida</a> aqui!</p>
 			</div>
 		)
 	}
