@@ -6,21 +6,29 @@ import TextField from '@material-ui/core/TextField'
 
 import {show_stringify} from 'helpers/json'
 
-import { user } from 'services/user'
+import { create } from 'services/user'
 
 import { withRouter  } from 'react-router-dom'
 
+const initialState = {
+	name: '',
+	email:'',
+	username: '',
+	password: '',
+
+	type: 'Aluno',
+	status: 'Ativo',
+	matricula: '',
+	gitlab: '',
+
+	isLoading: false,
+	errors: {}
+}
 
 class UserForm extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			username: '',
-			password: '',
-			password_confirmation: '',
-			isLoading: false,
-			errors: {}
-		}	
+		this.state = initialState
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}
@@ -30,8 +38,9 @@ class UserForm extends React.Component {
 		this.setState({
 			isLoading: true,
 		})
+		
 		const { username, password } = this.state
-		login(username, password, true, (error, data) => {
+		create(username, password, true, (error, data) => {
 			if(error) {
 				this.setState({errors: { username: true, password: true }})
 				return false;
@@ -54,21 +63,48 @@ class UserForm extends React.Component {
 	}
 
 	render() {
-		const { username, password, isLoading, errors } = this.state
+		const { name, email, username, password, type, status, matricula, gitlab } = this.state
+		const { isLoading, errors } = this.state
 		
 		return (
 			<div className="container">
 				<form onSubmit={this.onSubmit}>
-					<h1>Login</h1>
+					<h1>Cadastro de Usuário</h1>
+					{/* Nome */}
+					<TextField 
+						className="input"
+						name="name"
+						label="Nome"
+						onChange={this.onChange}
+						error={errors.name}
+						value={name}
+					/>
+					<br/>
+					
+					{/* Email */}
+					<TextField 
+						className="input"
+						name="email"
+						label="Email"
+						onChange={this.onChange}
+						error={errors.email}
+						value={email}
+					/>
+					<br/>
+
+					{/* Username */}
 					<TextField 
 						className="input"
 						name="username"
-						label="Usuário"
+						label="Login"
 						onChange={this.onChange}
-						error={errors.username}
 						value={username}
+						error={errors.username}
+						type="username"
 					/>
 					<br/>
+
+					{/* Senha */}
 					<TextField 
 						className="input"
 						name="password"
@@ -79,11 +115,69 @@ class UserForm extends React.Component {
 						type="password"
 					/>
 					<br/>
+
+					{/* Senha */}
+					<TextField 
+						className="input"
+						name="password"
+						label="Senha"
+						onChange={this.onChange}
+						value={password}
+						error={errors.password}
+						type="password"
+					/>
+					<br/>
+			
+					{/* not needed */}
+					{/* Tipo */}
+					<TextField 
+						className="input"
+						name="type"
+						label="Tipo"
+						onChange={this.onChange}
+						value={type}
+						error={errors.type}
+					/>
+					<br/>
+
+					{/* Status */}
+					<TextField 
+						className="input"
+						name="status"
+						label="Status"
+						onChange={this.onChange}
+						value={status}
+						error={errors.status}
+					/>
+					<br/>
+
+					{/* Matricula */}
+					<TextField 
+						className="input"
+						name="matricula"
+						label="Matricula"
+						onChange={this.onChange}
+						value={matricula}
+						error={errors.matricula}
+					/>
+					<br/>
+
+					{/* Gitlab */}
+					<TextField 
+						className="input"
+						name="gitlab"
+						label="Gitlab"
+						onChange={this.onChange}
+						value={gitlab}
+						error={errors.gitlab}
+					/>
+					<br/>
+
 					<Button
 						className="submitBtn"
 						type="submit"
 						disabled={isLoading}
-					>Autenticar-se</Button>
+					>Cadastrar</Button>
 				</form>
 				{show_stringify(this.state)}
 			</div>

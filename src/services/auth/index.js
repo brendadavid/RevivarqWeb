@@ -8,14 +8,13 @@ export const login = (user_name, password, encrypt_password, callback) => {
         user_name: user_name,
         password: encrypt_password ? crypto.SHA256(password).toString() : password,
     }
-    console.log(params)
     axios({
         method: 'post',
         url: `${api}/login`,
         data: params,
         timeout: 5000,
         headers: { 
-            'Content-Type': 'application/json' // Declarando que estou passando um JSON como body da request
+            'Content-Type': 'application/json' 
         }
     })
     .then( response => {
@@ -53,7 +52,7 @@ export const validToken = (token, callback) => {
     })
     .then( response => {
         const api_response = response.data
-        callback(api_response, null)
+        callback(null, api_response)
         return false
     })
     .catch( error => {

@@ -9,7 +9,7 @@ import { logout } from 'services/auth'
 import Button from '@material-ui/core/Button'
 
 // Views
-import Page from '../Page';
+import Page from 'views/Page';
 
 
 class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é criar uma Rota protegida e usa-la com herança. Ver ProtectedPage para entender a lógica

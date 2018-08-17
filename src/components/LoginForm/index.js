@@ -19,11 +19,13 @@ class LoginForm extends React.Component {
 			password: '',
 			isLoading: false,
 			errors: {}
-		}	
+		}
+		console.log(this.state)
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}
 
+	
 	onSubmit(e) {
 		e.preventDefault()
 		this.setState({
@@ -36,6 +38,7 @@ class LoginForm extends React.Component {
 				return false;
 			} else {
 				const {history} = this.props
+				this.setState({username: '', password: ''})
 				history.push('/')
 				console.log(`Logged in Successfully: ${data}`)
 				return true;

@@ -5,7 +5,7 @@ import {api} from 'configs/'
 
 export const create = (user, callback) => {
     const params = {
-        ...user
+        ...user,
         password: crypto.SHA256(user.password).toString(),
     }
     console.log(params)
@@ -15,7 +15,7 @@ export const create = (user, callback) => {
         data: params,
         timeout: 5000,
         headers: { 
-			'Content-Type': 'application/json' // Declarando que estou passando um JSON como body da request
+			'Content-Type': 'application/json', // Declarando que estou passando um JSON como body da request
 			'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })

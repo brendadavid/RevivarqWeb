@@ -1,22 +1,22 @@
 import React from 'react'
 import Page from 'views/Page';
-import LoginForm from 'components/LoginForm'
+import UserForm from 'components/UserForm'
 
 class LoginPage extends Page {
 	
 	authenticated = () => {
         return (
-            <div className="container">
-                <p>Você já está logado!</p>
-            </div>
+            <div>
+				<UserForm/>
+			</div>
         )
     }
 
     unauthenticated = () => {
         return (
-            <div>
-				<LoginForm/>
-			</div>
+            <div className="container">
+                <p>Você precisa estar logado para cadastrar usuários!</p>
+            </div>
         )
     }
 }
