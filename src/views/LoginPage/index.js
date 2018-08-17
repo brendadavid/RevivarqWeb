@@ -1,8 +1,8 @@
 import React from 'react'
-import ProtectedPage from '../ProtectedPage';
+import Page from '../Page';
 import LoginForm from 'components/LoginForm'
 
-class LoginPage extends ProtectedPage {
+class LoginPage extends Page {
 	
 	authenticated = () => {
         return (
