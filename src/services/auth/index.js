@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as crypto from 'crypto-js'
+import {api} from 'configs/'
 //import * as querystring from 'querystring'
 
 export const login = (user_name, password, encrypt_password, callback) => {
@@ -10,7 +11,7 @@ export const login = (user_name, password, encrypt_password, callback) => {
     console.log(params)
     axios({
         method: 'post',
-        url: 'http://localhost:4000/fluxoapi/login',
+        url: `${api}/login`,
         data: params,
         timeout: 5000,
         headers: { 
@@ -43,7 +44,7 @@ export const logout = (callback) => {
 export const validToken = (token, callback) => {
     axios({
         method: 'get',
-        url: 'http://localhost:4000/fluxoapi/self/token',
+        url: `${api}/self/token`,
         timeout: 5000,
         headers: { 
             'Content-Type': 'application/json',
