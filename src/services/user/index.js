@@ -22,14 +22,12 @@ export const create = (user, callback) => {
     .then( response => {
         const api_response = response.data
         if(api_response.data) {
-            if(api_response.data.token) {
-                localStorage.setItem('token', api_response.data.token)
-                callback(null, response.data.token)
-                return true
-            }
+            callback(null, response.data)
+            return true
+        } else {
+            callback(api_response, null)
+            return false
         }
-        callback(api_response, null)
-        return false
     })
     .catch( error => {
         callback(error, null)

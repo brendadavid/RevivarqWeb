@@ -33,21 +33,32 @@ class UserForm extends React.Component {
 		this.onChange = this.onChange.bind(this)
 	}
 
+	componentDidMount() {
+		this.setState({isLoading: true})
+		setTimeout(() => { // Workaround Firefox dando autocomplete no form com dados de login, procurar forma de escutar ao evento de autofill e impedi-lo de acontecer
+			this.setState(initialState)
+		}, 500)
+	}
+
 	onSubmit(e) {
 		e.preventDefault()
 		this.setState({
 			isLoading: true,
 		})
 		
-		const { username, password } = this.state
-		create(username, password, true, (error, data) => {
+		let user = {...this.state}
+		delete user.isLoading
+		delete user.errors
+
+		console.log(user)
+		create( user, (error, data) => {
 			if(error) {
-				this.setState({errors: { username: true, password: true }})
+				this.setState({errors: { }})
+				console.error(`Error creating user: ${JSON.stringify(error)}`)
+				console.log({[error.statusDesc.path]: true})				
 				return false;
 			} else {
-				const {history} = this.props
-				history.push('/')
-				console.log(`Logged in Successfully: ${data}`)
+				console.log(`Created user succesfully: ${JSON.stringify(data)}`)
 				return true;
 			}
 		})
@@ -67,7 +78,7 @@ class UserForm extends React.Component {
 		const { isLoading, errors } = this.state
 		
 		return (
-			<div className="container">
+			<div className="container" autoComplete="off">
 				<form onSubmit={this.onSubmit}>
 					<h1>Cadastro de Usuário</h1>
 					{/* Nome */}
