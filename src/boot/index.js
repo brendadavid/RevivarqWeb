@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {show_stringify} from 'helpers/json'
+// import {show_stringify} from 'helpers/json'
 import { withRouter  } from 'react-router-dom'
 
 import './app.css';
@@ -15,7 +15,7 @@ class App extends Component {
       <div className="App">
         <Header/>
         <Routing/>
-        {show_stringify(this.props)} 
+        {/* {show_stringify(this.props)}  */}
       </div>
     );
   }

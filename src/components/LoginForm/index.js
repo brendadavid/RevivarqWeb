@@ -4,6 +4,8 @@ import './styles.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
+import {show_stringify} from 'helpers/json'
+
 import { login } from 'services/auth'
 
 import { withRouter  } from 'react-router-dom'
@@ -16,8 +18,8 @@ class LoginForm extends React.Component {
 			username: '',
 			password: '',
 			isLoading: false,
-			errors: {},
-		}
+			errors: {}
+		}	
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}
@@ -30,7 +32,7 @@ class LoginForm extends React.Component {
 		const { username, password } = this.state
 		login(username, password, true, (error, data) => {
 			if(error) {
-				console.error(error)
+				this.setState({errors: { username: true, password: true }})
 				return false;
 			} else {
 				const {history} = this.props
@@ -82,6 +84,7 @@ class LoginForm extends React.Component {
 						disabled={isLoading}
 					>Autenticar-se</Button>
 				</form>
+				{show_stringify(this.state)}
 			</div>
 		)
 	}

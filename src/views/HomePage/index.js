@@ -44,7 +44,7 @@ class HomePage extends ProtectedPage { // Uma das varias maneiras de proteger um
 		return (
 			<div className="container">
 				<p><a onClick={() => this.redirect('/login')} className="clickable">Logue-se</a> para acessar a Home Page!</p>
-				<p>Quer tentar ser burlar a nossa segurança? Tenta entrar nessa rota <a onClick={() => this.redirect('/protected')} className="clickable">Protegida</a> aqui!</p>
+				<p>Tenta entrar nessa rota: <a onClick={() => this.redirect('/protected')} className="clickable">Protegida</a> aqui! Logado e depois deslogado pra ver o que acontece.</p>
 			</div>
 		)
 	}

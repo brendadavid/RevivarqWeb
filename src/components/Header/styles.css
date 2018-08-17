@@ -1,6 +1,7 @@
 .App-logo {
-	animation: App-logo-move infinite 4s linear;
+	/* animation: App-logo-move infinite 4s linear; */
 	/* animation: App-logo-spin infinite 0.333s linear; */
+	animation: App-logo-spinmove infinite 4s linear;
 	height: 80px;
 	width: 100%;
 }
@@ -24,4 +25,9 @@
 @keyframes App-logo-move {
 	from { transform: translateX(-75%); }
 	to { transform: translateX(75%); }
+}
+
+@keyframes App-logo-spinmove {
+	from { transform: translateX(-75%) rotate(0deg); }
+	to { transform: translateX(75%) rotate(360deg); }
 }
