@@ -3,7 +3,7 @@ import './styles.css'
 
 import { validToken } from 'services/auth/'
 
-class ProtectedPage extends React.Component {
+class Page extends React.Component {
 
     redirect = (path) => {
 		const {history} = this.props
@@ -50,4 +50,4 @@ class ProtectedPage extends React.Component {
     }
 }
 
-export default ProtectedPage    
+export default Page    

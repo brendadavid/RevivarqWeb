@@ -3,12 +3,3 @@
     color: blue;
     text-decoration: underline;
 }
-
-.container .logoutBtn {
-    position: fixed;
-    bottom: 5px;
-    right: 5px;
-    background-color: rgba(0, 0, 0, 0.9); 
-    color: white;
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.623);
-}
