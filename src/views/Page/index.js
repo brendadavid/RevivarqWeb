@@ -3,13 +3,51 @@ import './styles.css'
 
 import { validToken } from 'services/auth/'
 
+// Internal Components
+import Header from 'components/Header'
+
 class Page extends React.Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            render: undefined,
+            headerVisible: true // por padrão mostra o header nas páginas
+        }
+    }
+
+    componentWillMount() {
+        this.renderAuthentication()
+    }
+
+    /*
+     *  Helpers
+     */ 
 
     redirect = (path) => {
 		const {history} = this.props
-		history.push(path)
-	}
+        history.push(path)
+    }
+    
+    toggleHeader() {
+        const {headerVisible} = this.state
+        this.setState({headerVisible: !headerVisible})
+        return this.state.showHeader
+    }
 
+    displayHeader() {
+        this.setState({headerVisible: true})
+        return this.state.showHeader
+    }
+
+    hideHeader() {
+        this.setState({headerVisible: false})
+        return this.state.headerVisible
+    }
+
+    /*
+     *  Views
+     */
     authenticated = () => {
         return (
             <div className="container">
@@ -26,28 +64,42 @@ class Page extends React.Component {
         )
     }
 
-	render() {
-        if(localStorage.getItem('token')) {
-            return this.authenticated()
+    loading = () => {
+        return (
+            <div className="container">
+                <p>Carregando pagina. Aguarde...</p>
+            </div>
+        )
+    }
+
+    renderAuthentication = async () => {
+        try {
+            const isAuthenticated = await validToken()
+            if(isAuthenticated) {
+                await this.setState({render: this.authenticated()})
+            } else {
+                await this.setState({render: this.unauthenticated()})
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    render() {
+        const {render, headerVisible} = this.state
+        if(render) {
+            return (
+                <div>
+                    <Header display={headerVisible}/>
+                    {render}
+                </div>
+            )
         } else {
-            return this.unauthenticated()
+            return this.loading()
         }
     }
     
-    componentWillMount() {
-        console.log('Checando Token...')
-        validToken(localStorage.getItem('token'), (error, valid) => {
-            if(error) {
-                console.error(error)
-            } else {
-                if(valid) {
-                    
-                } else {
-                    localStorage.removeItem('token')
-                }
-            }
-        })
-    }
+    
 }
 
 export default Page    

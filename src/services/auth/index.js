@@ -3,34 +3,13 @@ import * as crypto from 'crypto-js'
 import {api} from 'configs/'
 //import * as querystring from 'querystring'
 
-export const isAuthenticated = () => {
-    const token = localStorage.getItem('token')
-    const username = localStorage.getItem('username')
-    const password = localStorage.getItem('password')
-
-    validToken(token, (error, success) => {
-        if(success) {
-            return true
-        } else {
-            console.error(error)
-            localStorage.removeItem('token')
-            login(username, password, false, (error, success) => {
-                if(error) {
-                    return false
-                } else {
-                    return true
-                }
-            })
-        }
-    })
-}
-
-export const login = (user_name, password, encrypt_password, callback) => {
-    const params = { // Parametro de login Usuario e Senha
+export const login = async (user_name, password, encrypt_password) => {
+    const params = {
         user_name: user_name,
         password: encrypt_password ? crypto.SHA256(password).toString() : password,
     }
-    axios({
+
+    const response = await axios({
         method: 'post',
         url: `${api}/login`,
         data: params,
@@ -39,34 +18,36 @@ export const login = (user_name, password, encrypt_password, callback) => {
             'Content-Type': 'application/json' 
         }
     })
-    .then( response => {
+
+    if(response) {
         const api_response = response.data
+        console.error(response.data)
+        const token = api_response.data.token
+
         if(api_response.data) {
             if(api_response.data.token) {
-                localStorage.setItem('token', api_response.data.token)
+                localStorage.setItem('token', token)
                 localStorage.setItem('username', params.user_name)
                 localStorage.setItem('password', params.password)
-                callback(null, response.data.token)
-                return true
+                console.log('Login Attempt Response: ', api_response)
+                return api_response
             }
         }
-        callback(api_response, null)
         return false
-    })
-    .catch( error => {
-        callback(error, null)
-        return false
-    })
+    } else {
+        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: 404 }
+    }
 }
 
-export const logout = (callback) => {
-    console.log('Deslogado')
+export const logout = () => {
+    console.log('Deslogado...')
     localStorage.removeItem('token')
-    callback()
 }
 
-export const validToken = (token, callback) => {
-    axios({
+export const validToken = async() => {
+    const token = localStorage.getItem('token')
+
+    const response = await axios({
         method: 'get',
         url: `${api}/self/token`,
         timeout: 5000,
@@ -75,14 +56,13 @@ export const validToken = (token, callback) => {
             'Authorization': `Bearer ${token}` // Passando o token de autorização
         }
     })
-    .then( response => {
-        const api_response = response.data
-        callback(null, api_response)
+
+    if(response) {
+        const responseData = response.data
+        const isAuthenticated = responseData.data
+        //console.log('Valid token response:', responseData)
+        return isAuthenticated
+    } else {
         return false
-    })
-    .catch( error => {
-        let errorObj = { statusDesc: error, statusCode: 2 }
-        callback(errorObj, null)
-        return false
-    })
+    }
 }

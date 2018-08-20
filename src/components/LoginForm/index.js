@@ -26,27 +26,24 @@ class LoginForm extends React.Component {
 	}
 
 	
-	onSubmit(e) {
+	async onSubmit(e) {
 		e.preventDefault()
 		this.setState({
 			isLoading: true,
 		})
 		const { username, password } = this.state
-		login(username, password, true, (error, data) => {
-			if(error) {
-				this.setState({errors: { username: true, password: true }})
-				return false;
-			} else {
+		const loginAttempt = await login(username, password, true)
+		
+		if(loginAttempt) {
+			if(loginAttempt.statusCode !== 200) { // status code OK
 				const {history} = this.props
-				this.setState({username: '', password: ''})
 				history.push('/')
-				console.log(`Logged in Successfully: ${data}`)
 				return true;
+			} else {
+				await this.setState({errors: { username: true, password: true }})
+				return false
 			}
-		})
-		this.setState({
-			isLoading: false,
-		})
+		}
 	}
 
 	onChange(e) {

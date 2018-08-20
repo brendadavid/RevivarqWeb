@@ -3,34 +3,29 @@ import * as crypto from 'crypto-js'
 import {api} from 'configs/'
 //import * as querystring from 'querystring'
 
-export const create = (user, callback) => {
+export const create = async (user, encryptPassword) => {
     const params = {
         ...user,
-        password: crypto.SHA256(user.password).toString(),
+        password: encryptPassword ? crypto.SHA256(user.password).toString() : user.password,
     }
     console.log(params)
-    axios({
+    const response = await axios({
         method: 'post',
         url: `${api}/users`,
         data: params,
         timeout: 5000,
         headers: { 
-			'Content-Type': 'application/json', // Declarando que estou passando um JSON como body da request
+			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })
-    .then( response => {
+
+    if(response) {
         const api_response = response.data
         if(api_response.data) {
-            callback(null, response.data)
-            return true
+            return response.data
         } else {
-            callback(api_response, null)
-            return false
+            return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: 404 }
         }
-    })
-    .catch( error => {
-        callback(error, null)
-        return false
-    })
+    }
 }

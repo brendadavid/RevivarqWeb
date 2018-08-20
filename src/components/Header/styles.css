@@ -8,9 +8,15 @@
 	float: left;
 }
 
+@media only screen and (max-width: 600px) {
+	.App-logo {
+		padding-top: 10px;
+	}
+}
+
 .App-header {
     background-color: rgba(0, 0, 0, 0.9); 
-	height: 50px;
+	height: 80px;
 	padding: 5px;
 }
 
