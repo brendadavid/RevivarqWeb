@@ -10,6 +10,10 @@ import {validToken, logout} from 'services/auth'
 // Biblioteca de Componentes
 import Button from '@material-ui/core/Button'
 
+/**
+ *  Recomendo substituir este Header por um header advindo de uma biblioteca de componentes
+ */
+
 class Header extends React.Component {
 
 	constructor(props) {
@@ -64,8 +68,8 @@ class Header extends React.Component {
 	renderHeaderButtons = async () => {
         try {
 			const isAuthenticated = await validToken()
-			console.log('isAuthenticated:', isAuthenticated)
-            if(!isAuthenticated) {
+
+			if(!isAuthenticated) {
                 await this.setState({render: this.renderLogin()})
             } else {
                 await this.setState({render: this.renderLogout()})
@@ -81,9 +85,15 @@ class Header extends React.Component {
 		if(display) {
 			return (
 				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
+					<img 
+						src={logo} 
+						className="App-logo" 
+						alt="logo" 
+						onClick={() => {
+							this.redirect('/')
+						}}/>
 					{render}
-					<h1 className="App-title">Modelo de Arquitetura da AGES em React!</h1>
+					<h1 className="App-title">Modelo React!</h1>
 				</header>
 			)
 		} else {

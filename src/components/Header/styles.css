@@ -6,17 +6,12 @@
 	width: 50px;
 	margin: 2px;
 	float: left;
-}
-
-@media only screen and (max-width: 600px) {
-	.App-logo {
-		padding-top: 10px;
-	}
+    cursor: pointer;
 }
 
 .App-header {
     background-color: rgba(0, 0, 0, 0.9); 
-	height: 80px;
+	height: 50px;
 	padding: 5px;
 }
 
@@ -30,9 +25,29 @@
 .App-header .btn {
 	float: right;
 	margin: 5px;
-	background-color: rgba(0, 0, 255, 0.9); 
+	background-color: black;
 	color: white;
     text-shadow: 1px 1px rgba(255, 255, 255, 0.623);
+}
+
+@media only screen and (max-width: 600px) {
+	.App-logo {
+		padding-top: 2px;
+	}
+
+	.App-header {
+		height: 60px;	
+	}
+
+	.App-title {
+		padding-top: 5px;
+	}
+
+	.App-header .btn {
+		font-size: 0.8em;
+		top: 7px;
+		
+	}
 }
 
 @keyframes App-logo-spin {

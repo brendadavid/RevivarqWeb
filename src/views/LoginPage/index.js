@@ -3,12 +3,9 @@ import Page from 'views/Page';
 import LoginForm from 'components/LoginForm'
 
 class LoginPage extends Page {
-    
-    componentDidMount() {
-        this.hideHeader()
-    }
-    
+
 	authenticated = () => {
+        this.showHeader()
         return (
             <div className="container">
                 <p>Você já está logado!</p>
@@ -17,6 +14,7 @@ class LoginPage extends Page {
     }
 
     unauthenticated = () => {
+        this.hideHeader()
         return (
             <div>
 				<LoginForm/>

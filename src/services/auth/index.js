@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as crypto from 'crypto-js'
 import {api} from 'configs/'
+import { HTTPStatusCodes } from 'configs/constants';
 //import * as querystring from 'querystring'
 
 export const login = async (user_name, password, encrypt_password) => {
@@ -35,7 +36,7 @@ export const login = async (user_name, password, encrypt_password) => {
         }
         return false
     } else {
-        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: 404 }
+        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
     }
 }
 
@@ -63,6 +64,6 @@ export const validToken = async() => {
         //console.log('Valid token response:', responseData)
         return isAuthenticated
     } else {
-        return false
+        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
     }
 }

@@ -3,3 +3,10 @@
     color: blue;
     text-decoration: underline;
 }
+
+.container .btn {
+	margin: 5px;
+	background-color: black;
+    color: white;
+    text-shadow: 1px 1px rgba(255, 255, 255, 0.623);
+}

@@ -9,8 +9,8 @@ import BlankPage from 'views/BlankPage'
 
 // Users
 import UserEditPage from 'views/UserPages/CreateUpdate'
-import UserDetailPage from 'views/UserPages/CreateUpdate'
-import UserListPage from 'views/UserPages/CreateUpdate'
+import UserDetailsPage from 'views/UserPages/Details'
+import UserListPage from 'views/UserPages/List'
 
 export default () => {
 	return (
@@ -21,9 +21,10 @@ export default () => {
 				<Route path='/protected' component={Page}/>
 
 				{/* User Container */}
+				<Route path='/users/list' component={UserListPage}/>
+				<Route path='/users/details/:id' component={UserDetailsPage}/>
 				<Route path='/users/edit' component={UserEditPage}/>
-				<Route path='/users/edit/:id' component={UserDetailPage}/>
-				<Route path='/users/' component={UserListPage}/>
+				<Route path='/users/edit/:id' component={UserEditPage}/>
 				{/* End of User Container */}
 
 				{/* 404 - Page not Found */}

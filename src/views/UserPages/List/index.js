@@ -1,8 +1,7 @@
 import React from 'react'
 import Page from 'views/Page';
-import UserForm from 'components/UserForm'
 
-class LoginPage extends Page {
+class UserListPage extends Page {
 	
 	authenticated = () => {
         return (
@@ -21,4 +20,4 @@ class LoginPage extends Page {
     }
 }
 
-export default LoginPage 
+export default UserListPage 

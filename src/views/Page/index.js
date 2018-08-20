@@ -14,9 +14,6 @@ class Page extends React.Component {
             render: undefined,
             headerVisible: true // por padrão mostra o header nas páginas
         }
-    }
-
-    componentWillMount() {
         this.renderAuthentication()
     }
 
@@ -35,7 +32,7 @@ class Page extends React.Component {
         return this.state.showHeader
     }
 
-    displayHeader() {
+    showHeader() {
         this.setState({headerVisible: true})
         return this.state.showHeader
     }

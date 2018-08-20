@@ -4,7 +4,7 @@ import './styles.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-import {show_stringify} from 'helpers/json'
+// import {show_stringify} from 'helpers/json'
 
 import { login } from 'services/auth'
 
@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
 						disabled={isLoading}
 					>Autenticar-se</Button>
 				</form>
-				{show_stringify(this.state)}
+				{/* {show_stringify(this.state)} */}
 			</div>
 		)
 	}
