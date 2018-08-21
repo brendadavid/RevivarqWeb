@@ -1,14 +1,13 @@
 /**
- * HTTP Status Codes normalmente utilizado para codificar respostas
- * 		OK:
- * 		Created:
- * 		NoContent:
- * 		BadRequest:
- * 		Unauthorized:
- * 		Forbidden:
- * 		NotFound:
- * 		Conflict:
- * 		InternalServerError:
+ * @param {number} OK
+ * @param {number} Created
+ * @param {number} NoContent
+ * @param {number} BadRequest
+ * @param {number} Unauthorized
+ * @param {number} Forbidden
+ * @param {number} NotFound
+ * @param {number} Conflict
+ * @param {number} InternalServerError
  */
 export class HTTPStatusCodes {  
 	// RESPONSE ERROR CODES
@@ -21,4 +20,5 @@ export class HTTPStatusCodes {
 	static get NotFound()				{ return 404 }
 	static get Conflict()				{ return 409 }
 	static get InternalServerError()	{ return 500 }
+	static get NetworkReadTimeoutError(){ return 598 }
 }

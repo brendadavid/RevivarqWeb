@@ -20,7 +20,6 @@ class LoginForm extends React.Component {
 			isLoading: false,
 			errors: {}
 		}
-		console.log(this.state)
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}

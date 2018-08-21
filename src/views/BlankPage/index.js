@@ -1,6 +1,8 @@
 import React from 'react'
+import Page from 'views/Page';
 
-class BlankPage extends React.Component {
+class BlankPage extends Page {
+
 	render() {
 		return (
 			<div>

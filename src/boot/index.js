@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {show_stringify} from 'helpers/json'
 import { withRouter  } from 'react-router-dom'
 
 import './app.css';
@@ -14,7 +13,6 @@ class App extends Component {
     return (
       <div className="App">
         <Routing/>
-        {/* {show_stringify(this.props)}  */}
       </div>
     );
   }

@@ -22,37 +22,13 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 			userListAnchor: null,
 		}
 	}
-
-	componentDidMount() {
-		this.loadUserMenuItens()
-        this.showHeader()
-	}
-
-	userMenuHandleClick = event => {
-		console.log(event)
-		this.setState({ userListAnchor: event.currentTarget });
-	  };
 	
-	userMenuHandleClose = () => {
-		this.setState({ userListAnchor: null });
-	};
-
-	loadUserMenuItens = async () => {
-		let users = await listAll()
-		console.log(users)
-		users = users.data.map(user => {
-			return {
-				label: `${user.id_user}: ${user.name}`,
-				value: user.id_user,
-				data: user
-			}
-		})
-		console.warn(users)
-		this.setState({userList: users})
-		console.log(this.state)
-	}	
+	/*
+	 *	Rendering Functions
+	 */
 
 	authenticated = () => {
+		this.loadUserMenuItens()
 		const open = Boolean(this.state.userListAnchor)
 		
 		return (
@@ -107,6 +83,35 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 			</div>
 		)
 	}
+
+
+	/*
+	 *		User Interaction Functions
+	 */
+
+	userMenuHandleClick = event => {
+		console.log(event)
+		this.setState({ userListAnchor: event.currentTarget });
+	  };
+	
+	userMenuHandleClose = () => {
+		this.setState({ userListAnchor: null });
+	};
+
+	loadUserMenuItens = async () => {
+		let users = await listAll()
+		console.log(users)
+		users = users.data.map(user => {
+			return {
+				label: `${user.id_user}: ${user.name}`,
+				value: user.id_user,
+				data: user
+			}
+		})
+		console.warn(users)
+		this.setState({userList: users})
+		console.log(this.state)
+	}	
 }
 
 export default withRouter(HomePage) 

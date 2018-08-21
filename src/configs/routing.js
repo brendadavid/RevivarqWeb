@@ -21,10 +21,10 @@ export default () => {
 				<Route path='/protected' component={Page}/>
 
 				{/* User Container */}
-				<Route path='/users/list' component={UserListPage}/>
-				<Route path='/users/details/:id' component={UserDetailsPage}/>
-				<Route path='/users/edit' component={UserEditPage}/>
-				<Route path='/users/edit/:id' component={UserEditPage}/>
+				<Route exact path='/users' component={UserListPage}/>
+				<Route exact path='/users/edit' component={UserEditPage}/>
+				<Route exact path='/users/edit/:id' component={UserEditPage}/>
+				<Route path='/users/:id' component={UserDetailsPage}/>
 				{/* End of User Container */}
 
 				{/* 404 - Page not Found */}

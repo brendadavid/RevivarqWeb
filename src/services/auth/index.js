@@ -21,12 +21,18 @@ export const login = async (user_name, password, encrypt_password) => {
     })
 
     if(response) {
+        let token
         const api_response = response.data
-        console.error(response.data)
-        const token = api_response.data.token
+        const responseData = api_response.data
 
-        if(api_response.data) {
-            if(api_response.data.token) {
+        if(responseData) {
+            token = api_response.data.token
+        } else {
+            return responseData
+        }
+
+        if(responseData) {
+            if(responseData.token) {
                 localStorage.setItem('token', token)
                 localStorage.setItem('username', params.user_name)
                 localStorage.setItem('password', params.password)
