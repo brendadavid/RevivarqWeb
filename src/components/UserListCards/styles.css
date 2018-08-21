@@ -1,0 +1,11 @@
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+.cards-container {
+	display: grid;
+	grid: auto;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
+}

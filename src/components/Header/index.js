@@ -59,6 +59,7 @@ class Header extends React.Component {
 				onClick={() => {
 					logout()
 					this.setState({render: this.renderLogin()})
+					window.location.reload()
 				}}
 			>Deslogar</Button>
 		)

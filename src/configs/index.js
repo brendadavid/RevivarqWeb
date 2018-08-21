@@ -1,17 +1,17 @@
 import env from 'configs/environment'
-import route_configs from 'configs/route_configs'
+import routing_configs from 'configs/routing_configs'
 
 export const api = env.api_url
 
 export const getRouteConfigs = (route) => {
 	let route_specific_configs = {}
 
-	if(route && route_configs[route]) {
-		route_specific_configs = route_configs[route]
+	if(route && routing_configs[route]) {
+		route_specific_configs = routing_configs[route]
 	}
 
 	return {
-		...route_configs['default'],
+		...routing_configs['default'],
 		...route_specific_configs,
 	}
 }

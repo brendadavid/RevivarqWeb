@@ -4,7 +4,7 @@ import './styles.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-// import {show_stringify} from 'helpers/json'
+// import { show_stringify } from 'helpers/json'
 
 import { login } from 'services/auth'
 
@@ -20,6 +20,7 @@ class LoginForm extends React.Component {
 			isLoading: false,
 			errors: {}
 		}
+
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}
@@ -32,16 +33,14 @@ class LoginForm extends React.Component {
 		})
 		const { username, password } = this.state
 		const loginAttempt = await login(username, password, true)
-		
-		if(loginAttempt) {
-			if(loginAttempt.statusCode !== 200) { // status code OK
-				const {history} = this.props
-				history.push('/')
-				return true;
-			} else {
-				await this.setState({errors: { username: true, password: true }})
-				return false
-			}
+
+		if(loginAttempt && localStorage.getItem('token')) {
+			const {history} = this.props
+			history.push('/')
+			return true;
+		} else { 
+			await this.setState({errors: { username: true, password: true }, isLoading: false})
+			return false
 		}
 	}
 
@@ -65,6 +64,7 @@ class LoginForm extends React.Component {
 						onChange={this.onChange}
 						error={errors.username}
 						value={username}
+						autoComplete="username"
 					/>
 					<br/>
 					<TextField 
@@ -75,6 +75,7 @@ class LoginForm extends React.Component {
 						value={password}
 						error={errors.password}
 						type="password"
+						autoComplete="password"
 					/>
 					<br/>
 					<Button
@@ -83,7 +84,7 @@ class LoginForm extends React.Component {
 						disabled={isLoading}
 					>Autenticar-se</Button>
 				</form>
-				{/* {show_stringify(this.state)} */}
+				{/* {show_stringify('Login Form State', this.state, 'login_state')} */}
 			</div>
 		)
 	}

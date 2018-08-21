@@ -73,6 +73,7 @@ class Page extends React.Component {
         return (
             <div className="container">
                 <p>Carregando pagina. Aguarde...</p>
+                <p>O backend está rodando?...</p>
             </div>
         )
     }

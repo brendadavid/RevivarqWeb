@@ -56,6 +56,8 @@ export const update = async (user, encryptPassword) => {
         password: encryptPassword ? crypto.SHA256(user.password).toString() : user.password,
     }
 
+    delete params.password // Backend por padrão não atualiza senha no update.
+
     console.log(params)
     const response = await axios({
         method: 'put',
@@ -78,7 +80,7 @@ export const update = async (user, encryptPassword) => {
     }
 }
 
-export const listAll = async () => {
+export const list = async () => {
     const response = await axios({
         method: 'get',
         url: `${api}/users/`,

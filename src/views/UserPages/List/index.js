@@ -1,12 +1,15 @@
 import React from 'react'
 import Page from 'views/Page';
 
+import UserListCards from 'components/UserListCards'
+
 class UserListPage extends Page {
 	
 	authenticated = () => {
         return (
             <div>
-				Dados dos usuários em tabela...
+				<h3>Listagem de Usuários</h3>
+                <UserListCards/>
 			</div>
         )
     }

@@ -24,7 +24,7 @@ export default () => {
 				<Route exact path='/users' component={UserListPage}/>
 				<Route exact path='/users/edit' component={UserEditPage}/>
 				<Route exact path='/users/edit/:id' component={UserEditPage}/>
-				<Route path='/users/:id' component={UserDetailsPage}/>
+				<Route exact path='/users/:id' component={UserDetailsPage}/>
 				{/* End of User Container */}
 
 				{/* 404 - Page not Found */}

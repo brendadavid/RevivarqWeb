@@ -6,12 +6,9 @@ import { withRouter  } from 'react-router-dom'
 
 // Views
 import Page from 'views/Page';
-import { Button, Menu, MenuItem, IconButton } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import { Button } from '@material-ui/core';
 
 // Serviços
-import {listAll} from 'services/user'
 
 class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é criar uma Rota protegida e usa-la com herança. Ver ProtectedPage para entender a lógica
 
@@ -19,7 +16,6 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 		super(props)
 		this.state = {
 			userList: [],
-			userListAnchor: null,
 		}
 	}
 	
@@ -27,10 +23,7 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 	 *	Rendering Functions
 	 */
 
-	authenticated = () => {
-		this.loadUserMenuItens()
-		const open = Boolean(this.state.userListAnchor)
-		
+	authenticated = () => {		
 		return (
 			<div className="container">
 				<p>Bem vindo!</p>
@@ -44,33 +37,8 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 				<Button
 					id="btn-ir-criar-usuario"
 					className="btn"
-					onClick={() => { this.redirect('/users/list')}}
-				>Listar Usuários </Button>
-
-				{/* Selecionar e Visualizar Usuário */}
-				<IconButton
-					aria-label="More"
-					aria-owns={open ? 'long-menu' : null}
-					aria-haspopup="true"
-					onClick={this.userMenuHandleClick}
-					>
-					<MoreVertIcon />
-				</IconButton>
-					<Menu
-						id="user-menu"
-						anchorEl={this.state.userListAnchor}
-						open={open}
-						onClose={this.userMenuHandleClose}
-					>
-					{this.state.userList.map(option => (
-						<MenuItem key={option.value} onClick={() =>{
-							this.userMenuHandleClose()
-							}}>
-						{option.label}
-						</MenuItem>
-					))}
-					</Menu>
-				
+					onClick={() => { this.redirect('/users')}}
+				>Listar Usuários </Button>				
 			</div>
 		)
 	}
@@ -83,35 +51,7 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 			</div>
 		)
 	}
-
-
-	/*
-	 *		User Interaction Functions
-	 */
-
-	userMenuHandleClick = event => {
-		console.log(event)
-		this.setState({ userListAnchor: event.currentTarget });
-	  };
-	
-	userMenuHandleClose = () => {
-		this.setState({ userListAnchor: null });
-	};
-
-	loadUserMenuItens = async () => {
-		let users = await listAll()
-		console.log(users)
-		users = users.data.map(user => {
-			return {
-				label: `${user.id_user}: ${user.name}`,
-				value: user.id_user,
-				data: user
-			}
-		})
-		console.warn(users)
-		this.setState({userList: users})
-		console.log(this.state)
-	}	
+		
 }
 
 export default withRouter(HomePage) 

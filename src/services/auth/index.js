@@ -1,18 +1,24 @@
 import axios from 'axios'
 import * as crypto from 'crypto-js'
-import {api} from 'configs/'
 import { HTTPStatusCodes } from 'configs/constants';
 //import * as querystring from 'querystring'
 
-export const login = async (user_name, password, encrypt_password) => {
+import {api_login, api_verify_token} from 'configs/api_routes'
+
+export const login = async (username, password, encrypt_password) => {
+    const route = api_login()
+    console.log(route)
+
     const params = {
-        user_name: user_name,
+        username: username,
         password: encrypt_password ? crypto.SHA256(password).toString() : password,
     }
 
+    console.log(params.password)
+
     const response = await axios({
-        method: 'post',
-        url: `${api}/login`,
+        method: route.method,
+        url: route.url,
         data: params,
         timeout: 5000,
         headers: { 
@@ -23,24 +29,22 @@ export const login = async (user_name, password, encrypt_password) => {
     if(response) {
         let token
         const api_response = response.data
+        console.log(api_response)
         const responseData = api_response.data
 
         if(responseData) {
             token = api_response.data.token
-        } else {
-            return responseData
         }
 
-        if(responseData) {
-            if(responseData.token) {
-                localStorage.setItem('token', token)
-                localStorage.setItem('username', params.user_name)
-                localStorage.setItem('password', params.password)
-                console.log('Login Attempt Response: ', api_response)
-                return api_response
-            }
+        if(token) {
+            localStorage.setItem('token', token)
+            localStorage.setItem('username', params.username)
+            localStorage.setItem('password', params.password)
+            console.log('Login Success Response: ', api_response)
+            return api_response
         }
-        return false
+        console.error('Login Failure Response: ', api_response)
+        return api_response
     } else {
         return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
     }
@@ -52,11 +56,12 @@ export const logout = () => {
 }
 
 export const validToken = async() => {
+    const route = api_verify_token()
     const token = localStorage.getItem('token')
 
     const response = await axios({
-        method: 'get',
-        url: `${api}/self/token`,
+        method: route.method,
+        url: route.url,
         timeout: 5000,
         headers: { 
             'Content-Type': 'application/json',
