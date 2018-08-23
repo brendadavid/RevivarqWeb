@@ -2,6 +2,7 @@ import React from 'react'
 import Page from 'views/Page';
 
 import UserListCards from 'components/UserListCards'
+import UserDialogBox from 'components/DialogBoxes/UserDialogForm'
 
 class UserListPage extends Page {
 	
@@ -9,6 +10,7 @@ class UserListPage extends Page {
         return (
             <div>
 				<h3>Listagem de Usuários</h3>
+                <UserDialogBox/>
                 <UserListCards/>
 			</div>
         )

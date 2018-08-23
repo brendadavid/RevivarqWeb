@@ -1,23 +1,25 @@
 import axios from 'axios'
 import * as crypto from 'crypto-js'
-import {api} from 'configs/'
-import { HTTPStatusCodes } from 'configs/constants';
-//import * as querystring from 'querystring'
+import { crud_user } from 'configs/api_routes'
+import { Constants } from 'configs/constants';
+import * as querystring from 'query-string';
+
 
 export const create = async (user, encryptPassword) => {
+    let route = crud_user.create()
+
     const params = {
         ...user,
         password: encryptPassword ? crypto.SHA256(user.password).toString() : user.password,
     }
-    console.log(params)
     const response = await axios({
-        method: 'post',
-        url: `${api}/users`,
+        method: route.method,
+        url: route.url,
         data: params,
         timeout: 5000,
         headers: { 
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${localStorage.getItem('token')}`
+			'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
     })
 
@@ -26,19 +28,21 @@ export const create = async (user, encryptPassword) => {
         if(api_response.data) {
             return response.data
         } else {
-            return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
+            return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: Constants.InternalServerError }
         }
     }
 }
 
 export const read = async (id) => {
+    let route = crud_user.read(id)
+
     const response = await axios({
-        method: 'get',
-        url: `${api}/users/${id}`,
+        method: route.method,
+        url: route.url,
         timeout: 5000,
         headers: { 
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${localStorage.getItem('token')}`
+			'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
     })
 
@@ -46,11 +50,13 @@ export const read = async (id) => {
         const api_response = response.data
         return api_response.data
     } else {
-        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
+        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: Constants.InternalServerError }
     }
 }
 
 export const update = async (user, encryptPassword) => {
+    let route = crud_user.update()
+
     const params = {
         ...user,
         password: encryptPassword ? crypto.SHA256(user.password).toString() : user.password,
@@ -58,15 +64,14 @@ export const update = async (user, encryptPassword) => {
 
     delete params.password // Backend por padrão não atualiza senha no update.
 
-    console.log(params)
     const response = await axios({
-        method: 'put',
-        url: `${api}/users`,
+        method: route.method,
+        url: route.url,
         data: params,
         timeout: 5000,
         headers: { 
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${localStorage.getItem('token')}`
+			'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
     })
 
@@ -75,19 +80,29 @@ export const update = async (user, encryptPassword) => {
         if(api_response.data) {
             return response.data
         } else {
-            return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
+            return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: Constants.InternalServerError }
         }
     }
 }
 
-export const list = async () => {
+export const list = async (contains, sort, isAscending) => {
+    const queryParams = querystring.stringify({
+        contains: contains,
+        sort: sort,
+        isAscending: isAscending
+    })
+
+    let route = crud_user.list()
+
+    // console.warn(`${route.url}?${queryParams}`)
+    
     const response = await axios({
-        method: 'get',
-        url: `${api}/users/`,
+        method: route.method,
+        url: `${route.url}?${queryParams}`,
         timeout: 5000,
         headers: { 
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${localStorage.getItem('token')}`
+			'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
     })
 
@@ -95,6 +110,6 @@ export const list = async () => {
         const api_response = response.data
         return api_response
     } else {
-        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: HTTPStatusCodes.InternalServerError }
+        return { statusDesc: 'Erro obtendo resposta do servidor.', statusCode: Constants.InternalServerError }
     }
 }

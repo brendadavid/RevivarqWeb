@@ -9,7 +9,6 @@ import BlankPage from 'views/BlankPage'
 
 // Users
 import UserEditPage from 'views/UserPages/CreateUpdate'
-import UserDetailsPage from 'views/UserPages/Details'
 import UserListPage from 'views/UserPages/List'
 
 export default () => {
@@ -24,7 +23,6 @@ export default () => {
 				<Route exact path='/users' component={UserListPage}/>
 				<Route exact path='/users/edit' component={UserEditPage}/>
 				<Route exact path='/users/edit/:id' component={UserEditPage}/>
-				<Route exact path='/users/:id' component={UserDetailsPage}/>
 				{/* End of User Container */}
 
 				{/* 404 - Page not Found */}

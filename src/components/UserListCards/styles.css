@@ -9,3 +9,7 @@
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
 }
+
+.search-bar {
+	width: 400px;
+}

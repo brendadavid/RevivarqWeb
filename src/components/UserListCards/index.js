@@ -1,15 +1,26 @@
 import React from 'react'
 import './styles.css'
-
-import Card from '@material-ui/core/Card'
-
 import { withRouter  } from 'react-router-dom'
 
+// Helpers
+// import {show_stringify} from 'helpers/json'
+
+// Component Library
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import TextField from '@material-ui/core/TextField'
+
+// Services
 import { list } from 'services/user'
-import { CardHeader, Button } from '@material-ui/core';
+
+// Internal components
+import UserDialogBox from 'components/DialogBoxes/UserDialogForm';
+
 
 const initialState = {
-	render: undefined
+	render: undefined,
+	contains: undefined,
+	sort: undefined
 }
 
 class UserListCards extends React.Component {
@@ -22,8 +33,16 @@ class UserListCards extends React.Component {
 		this.renderUserCards()
 	}
 
+	handleChange = async event => {
+		await this.setState({
+		  [event.target.name]: event.target.value,
+		});
+		this.renderUserCards()
+	  };
+
 	renderUserCards = async () => {
-		const users = await list()
+		const { contains, sort } = this.state
+		const users = await list(contains, sort) // contains: string, sort: string, isAscending: boolean
 		console.log(users)
 		const render = users.data.map(user => {
 			return (
@@ -35,14 +54,7 @@ class UserListCards extends React.Component {
 					{user.email}
 					<br/>
 					<div>
-						<Button 
-							className="editar-usuario-btn"
-							onClick={() => {
-								this.props.history.push(`/users/edit/${user.id}`)	
-							}
-						}>
-							Editar Usuário
-						</Button>
+						<UserDialogBox id={user.id}/>
 					</div>
 				</Card>
 			)
@@ -57,9 +69,25 @@ class UserListCards extends React.Component {
 		if(render) {
 			return (
 				<div className="container">
+
+					{/* Search Bar */}
+					<TextField 
+						id="search-bar"
+						name="contains"
+						label="Buscar usuários"
+						placeholder="Digite algum atributo de usuário..."
+						className="search-bar"
+						onChange={this.handleChange}
+						autoComplete="off"
+					/>
+
+					<br/><br/>
+
+					{/* Cards */}
 					<div className="cards-container">
 						{render}
 					</div>
+					{/* {show_stringify('State', this.state, 1)} */}
 				</div>
 			)
 		} else {

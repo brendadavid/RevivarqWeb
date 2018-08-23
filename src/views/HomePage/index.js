@@ -28,17 +28,12 @@ class HomePage extends Page { // Uma das varias maneiras de proteger uma rota é
 			<div className="container">
 				<p>Bem vindo!</p>
 				<p>Agora você pode acessar a rota <a onClick={() => this.redirect('/protected')} className="clickable">Protegida</a>!</p>
-				<Button
-					id="btn-ir-criar-usuario"
-					className="btn"
-					onClick={() => { this.redirect('/users/edit')}}
-				>Criar Usuário	</Button>
 
 				<Button
 					id="btn-ir-criar-usuario"
 					className="btn"
 					onClick={() => { this.redirect('/users')}}
-				>Listar Usuários </Button>				
+				>Usuários</Button>				
 			</div>
 		)
 	}

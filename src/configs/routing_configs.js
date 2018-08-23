@@ -9,8 +9,8 @@ const route_configs = {
 			show: true,
 		},
 		onAuthenticate: {
-			print_state: true,
-			print_props: true,
+			print_state: false,
+			print_props: false,
 		},
 		onRender: {
 			show_json_state: false,

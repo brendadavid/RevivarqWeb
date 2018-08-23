@@ -1,13 +1,18 @@
 import React from 'react'
+import './styles.css'
+
 import Page from 'views/Page';
-import UserForm from 'components/UserForm'
+
+import UserForm from 'components/Forms/UserForm'
+
 
 class EditUserPage extends Page {
 	
 	authenticated = () => {
         return (
-            <div>
-				<UserForm/>
+            <div className="container">
+                <h1>Cadastro de Usuário</h1>
+				<UserForm reloadOnSubmission={true}/>
 			</div>
         )
     }

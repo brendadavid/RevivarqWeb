@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from 'views/Page';
-import LoginForm from 'components/LoginForm'
+import LoginForm from 'components/Forms/LoginForm'
 
 class LoginPage extends Page {
 

@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import { create, read, update } from 'services/user'
 
 import { withRouter  } from 'react-router-dom'
+import { Constants } from '../../../configs/constants';
 
 const initialState = {
 	name: '',
@@ -20,21 +21,57 @@ const initialState = {
 	errors: {}
 }
 
+
+/**
+ *  Propriedades
+ * 		hideSubmit {true/false}: esconde o botão de submit
+ *  	reloadOnSubmission {true/false}: faz a página recarregar ao enviar um formulário com sucesso
+ *  	user {model} :  objeto usuário a ser enviado ao backend
+ */
 class UserForm extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = initialState
 
+		if(props.id) {
+			this.state = {
+				...this.state,
+				id: props.id,
+			}
+		}	
+
 		this.onSubmit = this.onSubmit.bind(this)
 		this.onChange = this.onChange.bind(this)
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
+		if(this.props.onRef) {
+			this.props.onRef(this)
+		}
+		this.loadUserData()
+	}
+
+	componentWillUnmount() {
+		if(this.props.onRef) {
+			this.props.onRef(undefined)
+		}		
+	}
+
+	async loadUserData() {
 		const {match} = this.props
+		let id
+
+		if(match.params.id || this.state.id) {
+			this.setState({isLoading: true})
+		}
 		
 		if(match.params.id) {
-			this.setState({isLoading: true})
-			const id = match.params.id
+			id = match.params.id
+		} else if (this.state.id) {
+			id = this.state.id
+		}
+
+		if(id) {
 			const user = await read(id)
 			if(user) {
 				this.setState({
@@ -49,7 +86,10 @@ class UserForm extends React.Component {
 	}
 
 	onSubmit(e) {
-		e.preventDefault()
+		if(e) {
+			e.preventDefault()
+		}
+		
 		this.setState({
 			isLoading: true,
 		})
@@ -63,44 +103,65 @@ class UserForm extends React.Component {
 		} else {
 			this.createUser(user)
 		}
-		
+	}
+
+	createUser = async (user) => {
+		const { reloadOnSubmission } = this.props
+
+		const status = await create(user)
+
+		console.log('Criação usuário:', status)
+
 		this.setState({
 			isLoading: false,
 		})
+
+		if(reloadOnSubmission && status.statusCode === Constants.successCode) {
+			window.location.reload()
+		}
 	}
 
-	createUser = (user) => {
-		create( user, (error, data) => {
-			if(error) {
-				this.setState({errors: { }})
-				console.error(`Error creating user: ${JSON.stringify(error)}`)
-				console.log({[error.statusDesc.path]: true})				
-				return false;
-			} else {
-				console.log(`Created user succesfully: ${JSON.stringify(data)}`)
-				return true;
-			}
-		})
-	}
+	updateUser = async (user) => {
+		const { reloadOnSubmission } = this.props
 
-	updateUser = (user) => {
-		update( user, (error, data) => {
-			if(error) {
-				this.setState({errors: { }})
-				console.error(`Error updating user: ${JSON.stringify(error)}`)
-				console.log({[error.statusDesc.path]: true})				
-				return false;
-			} else {
-				console.log(`Updated user succesfully: ${JSON.stringify(data)}`)
-				return true;
-			}
+		const status = await update(user)
+		
+		console.log('Atualização de usuário:', status)
+
+		this.setState({
+			isLoading: false,
 		})
+
+		if(reloadOnSubmission && status.statusCode === Constants.successCode) {
+			window.location.reload()
+		}
 	}
 
 	onChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
 		})
+	}
+
+	renderSubmitButton = () => {
+		const { isLoading } = this.state
+		const { hideSubmit } = this.props
+
+		if(hideSubmit){
+			return (
+				<div></div>
+			)
+		} else {
+			return (
+				<Button
+					className="submitBtn"
+					type="submit"
+					disabled={isLoading}
+				>
+					{this.state.id ? 'Atualizar Usuário' : 'Criar Usuário' }
+				</Button>
+			)
+		}
 	}
 
 	render() {
@@ -110,7 +171,6 @@ class UserForm extends React.Component {
 		return (
 			<div className="container">
 				<form onSubmit={this.onSubmit} autoComplete="off">
-					<h1>Cadastro de Usuário</h1>
 					{/* Nome */}
 					<TextField 
 						className="input"
@@ -169,11 +229,7 @@ class UserForm extends React.Component {
 					/>
 					<br/>
 
-					<Button
-						className="submitBtn"
-						type="submit"
-						disabled={isLoading}
-					>{this.state.id ? 'Atualizar Usuário' : 'Criar Usuário' }</Button>
+					{this.renderSubmitButton()}
 				</form>
 				{/* {show_stringify(this.state)} */}
 			</div>

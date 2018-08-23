@@ -34,7 +34,7 @@ class LoginForm extends React.Component {
 		const { username, password } = this.state
 		const loginAttempt = await login(username, password, true)
 
-		if(loginAttempt && localStorage.getItem('token')) {
+		if(loginAttempt && sessionStorage.getItem('token')) {
 			const {history} = this.props
 			history.push('/')
 			return true;

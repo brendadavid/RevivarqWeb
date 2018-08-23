@@ -9,7 +9,7 @@
  * @param {number} Conflict
  * @param {number} InternalServerError
  */
-export class HTTPStatusCodes {  
+export class Constants {  
 	// RESPONSE ERROR CODES
 	static get OK()						{ return 200 }
 	static get Created()				{ return 201 }
@@ -21,4 +21,10 @@ export class HTTPStatusCodes {
 	static get Conflict()				{ return 409 }
 	static get InternalServerError()	{ return 500 }
 	static get NetworkReadTimeoutError(){ return 598 }
+
+	// API CODES
+	static get successCode()        { return 0 }
+	static get errorCodeSequelize() { return 1 }
+	static get errorCodeAuth()      { return 2 }
 }
+
