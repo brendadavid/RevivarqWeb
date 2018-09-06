@@ -108,7 +108,7 @@ class UserForm extends React.Component {
 	createUser = async (user) => {
 		const { reloadOnSubmission } = this.props
 
-		const status = await create(user)
+		const status = await create(user, true)
 
 		console.log('Criação usuário:', status)
 
